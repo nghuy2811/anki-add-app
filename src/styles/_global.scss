@@ -24,3 +24,25 @@ body {
   min-height: 100vh;
   color: $main-white;
 }
+
+.container {
+  margin: 0 auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  max-width: 1400px;
+  width: 100%;
+
+  @include max-xl {
+    max-width: 1200px;
+  }
+
+  @include max-lg {
+    max-width: 900px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  @include max-md {
+    max-width: none;
+  }
+}
