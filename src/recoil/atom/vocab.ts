@@ -1,6 +1,8 @@
 import { atom } from "recoil";
 
-export const vocabState = atom<any>({
+import { IVocab } from "@/dictionary/merriam.dictionary";
+
+export const vocabState = atom<IVocab[] | null>({
   key: 'vocabState',
   default: null
 })
