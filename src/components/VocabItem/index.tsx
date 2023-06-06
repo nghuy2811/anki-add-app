@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo } from 'react';
 
 import { IVocab } from '@/dictionary/merriam.dictionary';
+import AddVocabService from '@/services/addVocabService';
 import Button from '../Button';
 
 type VocabItemPropTypes = {
@@ -14,8 +15,9 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
     () => data.hwi.hw.replace(/[*]/g, ''),
     [data.hwi.hw]
   );
-  const handleAddToAnki = useCallback(() => {
-    const front = `<div class='front'><h1 class='word'>${mainWord}</h1><span class='type'>(${data.fl})</span></div>`;
+  const handleAddToAnki = useCallback(async () => {
+    const front = `<div class='front'><h1 class='word'>${mainWord}</h1></div>`;
+    const type = `<div class='type'>(${data.fl})</div>`;
     let definitions = '';
 
     for (let index = 0; index < data.shortdef.length; index++) {
@@ -26,8 +28,9 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
 
     const back = `<div class='back'><ul class='definitions'>${definitions}</ul></div>`;
 
-    console.log({
+    await AddVocabService.addNote({
       front: front.replace(/\n/g, ''),
+      type,
       back,
     });
   }, [data, mainWord]);
