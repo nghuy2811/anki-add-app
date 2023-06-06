@@ -2,6 +2,8 @@
 
 import React, { useCallback, useMemo } from 'react';
 
+import { audioUrl } from '@/utils/constants';
+
 import { IVocab } from '@/dictionary/merriam.dictionary';
 import AddVocabService from '@/services/addVocabService';
 import Button from '../Button';
@@ -26,12 +28,21 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
       definitions = definitions.concat(defElement);
     }
 
-    const back = `<div class='back'><ul class='definitions'>${definitions}</ul></div>`;
+    const back = `<div class='back'><h6 class='ipa'>${
+      data.hwi.prs && data.hwi.prs.length > 0 ? data.hwi.prs[0].ipa : ''
+    }</h6><ul class='definitions'>${definitions}</ul></div>`;
+    const audioLink =
+      data.hwi.prs && data.hwi.prs.length > 0
+        ? `${audioUrl}/en/us/mp3/${data.hwi.prs[0].sound.audio.slice(0, 1)}/${
+            data.hwi.prs[0].sound.audio
+          }.mp3`
+        : '';
 
     await AddVocabService.addNote({
       front: front.replace(/\n/g, ''),
       type,
       back,
+      audio: audioLink,
     });
   }, [data, mainWord]);
 
