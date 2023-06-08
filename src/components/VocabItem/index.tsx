@@ -89,19 +89,24 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
     for (let index = 0; index < definitionsAndExamples.length; index++) {
       const curDef = definitionsAndExamples[index];
       if (curDef.def) {
-        const exampleContext = curDef.example.context
-          ? `<h5 class='example-context'>(${curDef.example.context})</h5>`
-          : '';
+        let exampleContext = '';
         let examples = '';
-        for (
-          let egIndex = 0;
-          egIndex < curDef.example.sentences.length;
-          egIndex++
-        ) {
-          const example = curDef.example.sentences[egIndex];
-          const exampleListEle = `<li class='example-item'><h5>${example}</h5></li>`;
-          examples = examples.concat(exampleListEle);
+
+        if (curDef.example) {
+          exampleContext = Boolean(curDef.example.context)
+            ? `<h5 class='example-context'>(${curDef.example.context})</h5>`
+            : '';
+          for (
+            let egIndex = 0;
+            egIndex < curDef.example.sentences.length;
+            egIndex++
+          ) {
+            const example = curDef.example.sentences[egIndex];
+            const exampleListEle = `<li class='example-item'><h5>${example}</h5></li>`;
+            examples = examples.concat(exampleListEle);
+          }
         }
+
         const defElement = `<li class='definition-item'><h2 class='definition'>${curDef.def}</h2>${exampleContext}<ul class='example-list'>${examples}</ul></li>`;
         definitions = definitions.concat(defElement);
       }

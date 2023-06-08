@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
-import { useSetRecoilState } from 'recoil';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 
 import Button from '../Button';
 
@@ -11,7 +11,7 @@ import { loadingState } from '@/recoil/atom/loading';
 
 const SearchVocab = () => {
   const [keyword, setKeyword] = useState('');
-  const setVocabData = useSetRecoilState(vocabState);
+  const [vocabData, setVocabData] = useRecoilState(vocabState);
   const setLoading = useSetRecoilState(loadingState);
 
   const handleSearch = useCallback(async () => {
@@ -25,9 +25,21 @@ const SearchVocab = () => {
       });
   }, [keyword, setVocabData, setLoading]);
 
+  useEffect(() => {
+    if (!keyword && vocabData !== null) {
+      setVocabData(null);
+    }
+  }, [keyword, vocabData, setVocabData]);
+
   return (
     <div>
-      <form action='' className='relative'>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSearch();
+        }}
+        className='relative'
+      >
         <input
           type='text'
           className='h-[40px] w-full rounded-[10px] py-[10px] pl-[10px] pr-[110px]'
@@ -35,7 +47,12 @@ const SearchVocab = () => {
           onChange={(e) => setKeyword(e.target.value)}
         />
         <div className='absolute right-0 top-0'>
-          <Button label='Search' action={handleSearch} />
+          <Button
+            type='submit'
+            label='Search'
+            action={handleSearch}
+            disable={!Boolean(keyword)}
+          />
         </div>
       </form>
     </div>
