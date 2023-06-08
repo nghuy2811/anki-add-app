@@ -1,3 +1,4 @@
 import LoadingOverlay from "./LoadingOverlay";
+import SettingOverlay from "./SettingOverlay";
 
-export { LoadingOverlay };
+export { LoadingOverlay, SettingOverlay };
