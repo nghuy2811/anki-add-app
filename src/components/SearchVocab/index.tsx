@@ -7,16 +7,23 @@ import Button from '../Button';
 
 import SearchVocabService from '@/services/searchVocabService';
 import { vocabState } from '@/recoil/atom/vocab';
+import { loadingState } from '@/recoil/atom/loading';
 
 const SearchVocab = () => {
   const [keyword, setKeyword] = useState('');
   const setVocabData = useSetRecoilState(vocabState);
+  const setLoading = useSetRecoilState(loadingState);
 
   const handleSearch = useCallback(async () => {
-    SearchVocabService.searchVocab(keyword).then((data) => {
-      setVocabData(data);
-    });
-  }, [keyword, setVocabData]);
+    setLoading(true);
+    SearchVocabService.searchVocab(keyword)
+      .then((data) => {
+        setVocabData(data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [keyword, setVocabData, setLoading]);
 
   return (
     <div>

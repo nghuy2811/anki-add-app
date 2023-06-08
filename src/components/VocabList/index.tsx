@@ -12,18 +12,22 @@ const VocabList = () => {
 
   return (
     <div>
-      {vocabData && vocabData.length > 0 ? (
+      {vocabData && (
         <>
-          {vocabData.map((vocab, vocabIndex) => (
-            <React.Fragment key={vocab.meta?.id || vocabIndex}>
-              <VocabItemWrapper data={vocab} />
-            </React.Fragment>
-          ))}
+          {vocabData.length > 0 ? (
+            <>
+              {vocabData.map((vocab, vocabIndex) => (
+                <React.Fragment key={vocab.meta?.id || vocabIndex}>
+                  <VocabItemWrapper data={vocab} />
+                </React.Fragment>
+              ))}
+            </>
+          ) : (
+            <h3 className='mt-[30px] text-center text-[26px] leading-[30px]'>
+              No result! Try again.
+            </h3>
+          )}
         </>
-      ) : (
-        <h3 className='mt-[30px] text-center text-[26px] leading-[30px]'>
-          No result! Try again.
-        </h3>
       )}
     </div>
   );
