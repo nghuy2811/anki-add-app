@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useMemo } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 import { audioUrl } from '@/utils/constants';
 import {
@@ -8,6 +9,7 @@ import {
   replaceTokenInString,
 } from '@/utils/utilFunctions';
 import AddVocabService from '@/services/addVocabService';
+import { loadingState } from '@/recoil/atom/loading';
 
 import { IVocab } from '@/dictionary/merriam.dictionary';
 import Button from '../Button';
@@ -17,6 +19,7 @@ type VocabItemPropTypes = {
 };
 
 const VocabItem = ({ data }: VocabItemPropTypes) => {
+  const setLoading = useSetRecoilState(loadingState);
   const mainWord = useMemo(
     () => data.hwi.hw.replace(/[*]/g, ''),
     [data.hwi.hw]
@@ -122,13 +125,25 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
           }.mp3`
         : '';
 
+    setLoading(true);
     await AddVocabService.addNote({
       front: front.replace(/\n/g, ''),
       type,
       back,
       audio: audioLink,
-    });
-  }, [data, mainWord, handleGetDefinitionsAndExamples]);
+    })
+      .then((res: any) => {
+        if (res.error) {
+          console.log(res.error);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [data, mainWord, handleGetDefinitionsAndExamples, setLoading]);
 
   return (
     <div className='my-[10px] rounded-[10px] border bg-white px-[10px] py-[20px]'>

@@ -9,4 +9,12 @@ const AnkiConnectInstance = axios.create({
   }
 })
 
+AnkiConnectInstance.interceptors.response.use(
+  (res) => {
+    return res.data
+  }, (error) => {
+    return Promise.reject(error.message || error)
+  }
+)
+
 export default AnkiConnectInstance
