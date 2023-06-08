@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { audioUrl } from '@/utils/constants';
+import { LocalStorageKeys, audioUrl } from '@/utils/constants';
 import {
   containCrossReferenceToken,
   replaceTokenInString,
@@ -131,6 +131,7 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
       type,
       back,
       audio: audioLink,
+      deckName: localStorage.getItem(LocalStorageKeys.deckName || ''),
     })
       .then((res: any) => {
         if (res.error) {

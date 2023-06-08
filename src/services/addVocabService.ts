@@ -8,7 +8,7 @@ const AddVocabService = {
       fields: ['Audio']
     }] : []
     const noteData = {
-      deckName: 'Dev',
+      deckName: data.deckName,
       modelName: 'Basic',
       fields: {
         "Front": data.front,

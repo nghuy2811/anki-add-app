@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { settingPopupState } from '@/recoil/atom/setting';
+import { LocalStorageKeys } from '@/utils/constants';
 
 import styles from './Overlay.module.scss';
 import Overlay from './Overlay';
@@ -12,10 +13,34 @@ import CloseIcon from '@/icons/CloseIcon';
 
 const SettingOverlay = () => {
   const [show, setShow] = useRecoilState(settingPopupState);
+  const [apiKeyInput, setApiKeyInput] = useState('');
+  const [deckNameInput, setDeckNameInput] = useState('');
 
   const handleClosePopup = useCallback(() => {
     setShow(false);
   }, [setShow]);
+
+  const handleSaveSettings = useCallback(() => {
+    if (apiKeyInput) {
+      localStorage.setItem(LocalStorageKeys.apiKey, apiKeyInput);
+    }
+
+    if (deckNameInput) {
+      localStorage.setItem(LocalStorageKeys.deckName, deckNameInput);
+    }
+
+    handleClosePopup();
+  }, [apiKeyInput, deckNameInput, handleClosePopup]);
+
+  useEffect(() => {
+    if (show) {
+      const storedApiKey = localStorage.getItem(LocalStorageKeys.apiKey);
+      const storedDeckName = localStorage.getItem(LocalStorageKeys.deckName);
+
+      if (storedApiKey) setApiKeyInput(storedApiKey);
+      if (storedDeckName) setDeckNameInput(storedDeckName);
+    }
+  }, [show]);
 
   return (
     <Overlay
@@ -43,6 +68,8 @@ const SettingOverlay = () => {
                 <input
                   type='text'
                   className='h-[40px] w-[400px] rounded-[10px] border-[1px] border-[#333] px-[10px]'
+                  value={apiKeyInput}
+                  onChange={(event) => setApiKeyInput(event.target.value)}
                 />
               </div>
               <div className='mt-[16px] flex items-center justify-between'>
@@ -50,11 +77,13 @@ const SettingOverlay = () => {
                 <input
                   type='text'
                   className='h-[40px] w-[400px] rounded-[10px] border-[1px] border-[#333] px-[10px]'
+                  value={deckNameInput}
+                  onChange={(event) => setDeckNameInput(event.target.value)}
                 />
               </div>
             </div>
             <div className='mt-[20px] flex justify-center'>
-              <Button label='Save settings' action={() => undefined} />
+              <Button label='Save settings' action={handleSaveSettings} />
             </div>
           </div>
         </div>

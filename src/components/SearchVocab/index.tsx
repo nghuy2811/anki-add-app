@@ -18,7 +18,17 @@ const SearchVocab = () => {
     setLoading(true);
     SearchVocabService.searchVocab(keyword)
       .then((data) => {
+        if (
+          typeof data === 'string' &&
+          data === 'Invalid API key. Not subscribed for this reference.'
+        ) {
+          return;
+        }
+
         setVocabData(data);
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);
