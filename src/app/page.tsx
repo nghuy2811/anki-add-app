@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import SearchVocab from '@/components/SearchVocab';
 import VocabList from '@/components/VocabList';
-import LoadingOverlay from '@/components/LoadingOverlay';
+import { LoadingOverlay } from '@/components/Overlay';
 
 export default function Home() {
   return (
