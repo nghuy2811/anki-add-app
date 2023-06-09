@@ -51,6 +51,8 @@ const SettingOverlay = () => {
       className={`${styles['mfp-3d-unfold']} ${
         show ? styles['mfp-ready'] : styles['mfp-removing']
       }`}
+      shouldCloseOnEscape
+      action={handleClosePopup}
     >
       <div className={`${styles['mfp-content']}`}>
         <div
