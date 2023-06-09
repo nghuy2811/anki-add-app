@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSetRecoilState, useRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
 
 import Button from '../Button';
 
@@ -18,17 +19,16 @@ const SearchVocab = () => {
     setLoading(true);
     SearchVocabService.searchVocab(keyword)
       .then((data) => {
-        if (
-          typeof data === 'string' &&
-          data === 'Invalid API key. Not subscribed for this reference.'
-        ) {
+        if (typeof data === 'string') {
+          toast.error(data);
           return;
         }
 
         setVocabData(data);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.message) return toast.error(err.message);
+        return toast.error(err);
       })
       .finally(() => {
         setLoading(false);
@@ -46,7 +46,6 @@ const SearchVocab = () => {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          handleSearch();
         }}
         className='relative'
       >

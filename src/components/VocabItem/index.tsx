@@ -2,6 +2,7 @@
 
 import React, { useCallback, useMemo } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
 
 import { LocalStorageKeys, audioUrl } from '@/utils/constants';
 import {
@@ -136,10 +137,14 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
       .then((res: any) => {
         if (res.error) {
           console.log(res.error);
+          toast.warn(res.error);
+          return;
         }
+
+        toast.success('Added to Anki!');
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       })
       .finally(() => {
         setLoading(false);

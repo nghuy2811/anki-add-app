@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import SearchVocab from '@/components/SearchVocab';
 import VocabList from '@/components/VocabList';
 import { LoadingOverlay, SettingOverlay } from '@/components/Overlay';
+import ToastContainerClient from '@/components/ToastContainerClient';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <SearchVocab />
         <VocabList />
       </div>
+      <ToastContainerClient />
     </>
   );
 }
