@@ -15,6 +15,7 @@ const SettingOverlay = () => {
   const [show, setShow] = useRecoilState(settingPopupState);
   const [apiKeyInput, setApiKeyInput] = useState('');
   const [deckNameInput, setDeckNameInput] = useState('');
+  const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   const handleClosePopup = useCallback(() => {
     setShow(false);
@@ -33,16 +34,24 @@ const SettingOverlay = () => {
       localStorage.removeItem(LocalStorageKeys.deckName);
     }
 
+    if (allowDuplicate) {
+      localStorage.setItem(LocalStorageKeys.allowDuplicate, 'true');
+    } else {
+      localStorage.removeItem(LocalStorageKeys.allowDuplicate);
+    }
+
     handleClosePopup();
-  }, [apiKeyInput, deckNameInput, handleClosePopup]);
+  }, [apiKeyInput, deckNameInput, handleClosePopup, allowDuplicate]);
 
   useEffect(() => {
     if (show) {
       const storedApiKey = localStorage.getItem(LocalStorageKeys.apiKey);
       const storedDeckName = localStorage.getItem(LocalStorageKeys.deckName);
+      const storedAllowDuplicate = localStorage.getItem(LocalStorageKeys.allowDuplicate);
 
       if (storedApiKey) setApiKeyInput(storedApiKey);
       if (storedDeckName) setDeckNameInput(storedDeckName);
+      if (storedAllowDuplicate) setAllowDuplicate(true);
     }
   }, [show]);
 
@@ -86,6 +95,17 @@ const SettingOverlay = () => {
                   value={deckNameInput}
                   onChange={(event) => setDeckNameInput(event.target.value)}
                 />
+              </div>
+              <div className='mt-[16px] flex items-center justify-between'>
+                <span>Allow duplicate:</span>
+                <div className='w-[400px] flex justify-center'>
+                <input
+                  type='checkbox'
+                  className='h-[30px] w-[30px] rounded-[10px] border-[1px] border-[#333] px-[10px]'
+                  checked={allowDuplicate}
+                  onChange={(event) => setAllowDuplicate(event.target.checked)}
+                />
+                </div>
               </div>
             </div>
             <div className='mt-[20px] flex justify-center'>

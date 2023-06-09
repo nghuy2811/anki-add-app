@@ -15,7 +15,10 @@ const AddVocabService = {
         "Back": data.back,
         "Type": data.type
       },
-      audio: audioField
+      audio: audioField,
+      options: {
+        allowDuplicate: data.allowDuplicate
+      }
     }
     const params = {
       "action": "addNote",

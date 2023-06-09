@@ -3,5 +3,6 @@ export const defTokenRegex = /\{(.*?)\}/g
 export const processableTokens = ['{bc}', '{it}', '{/it}', '{b}', '{/b}', '{ldquo}', '{rdquo}']
 export const LocalStorageKeys = {
   apiKey: 'API_KEY',
-  deckName: 'DECK_NAME'
+  deckName: 'DECK_NAME',
+  allowDuplicate: 'ALLOW_DUPLICATE'
 }

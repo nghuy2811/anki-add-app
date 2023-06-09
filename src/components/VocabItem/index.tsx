@@ -133,6 +133,7 @@ const VocabItem = ({ data }: VocabItemPropTypes) => {
       back,
       audio: audioLink,
       deckName: localStorage.getItem(LocalStorageKeys.deckName || ''),
+      allowDuplicate: Boolean(localStorage.getItem(LocalStorageKeys.allowDuplicate))
     })
       .then((res: any) => {
         if (res.error) {
