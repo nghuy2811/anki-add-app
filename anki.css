@@ -1,0 +1,96 @@
+.card {
+  font-family: arial;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  background-color: white;
+}
+
+.front {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.type {
+  color: green;
+  font-size: 16px;
+  font-weight: semi-bold;
+}
+
+.back {
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.ipa {
+  font-size: 20px;
+  line-height: 20px;
+  font-family: 'Times New Roman';
+  text-align: center;
+}
+
+.definition-content {
+  list-style-type: none;
+}
+
+.definition-item {
+  font-size: 24px;
+}
+
+.replay-button {
+  text-decoration: none;
+  display: block;
+  vertical-align: middle;
+  margin: 3px;
+}
+
+.replay-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.replay-button svg circle {
+  fill: #fff;
+  stroke: #414141;
+}
+
+.replay-button svg path {
+  fill: #414141;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-style: bold;
+}
+
+.definition {
+  font-size: 20px;
+}
+
+.example-context {
+  font-size: 14px;
+  color: red;
+}
+
+.example-list {
+  list-style-type: disc;
+  font-size: 12px;
+}
+
+.example-item {
+  color: gray;
+  font-weight: normal;
+}
+
+.example-item h5 {
+  font-size: 14px;
+  line-height: 18px;
+}
