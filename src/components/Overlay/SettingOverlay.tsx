@@ -23,10 +23,14 @@ const SettingOverlay = () => {
   const handleSaveSettings = useCallback(() => {
     if (apiKeyInput) {
       localStorage.setItem(LocalStorageKeys.apiKey, apiKeyInput);
+    } else {
+      localStorage.removeItem(LocalStorageKeys.apiKey);
     }
 
     if (deckNameInput) {
       localStorage.setItem(LocalStorageKeys.deckName, deckNameInput);
+    } else {
+      localStorage.removeItem(LocalStorageKeys.deckName);
     }
 
     handleClosePopup();
